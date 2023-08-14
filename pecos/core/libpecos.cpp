@@ -431,6 +431,7 @@ extern "C" {
         const PY_MAT* pX, \
         uint32_t* ret_idx, \
         float* ret_val, \
+        float* ret_embeddings, \
         uint32_t efS, \
         uint32_t topk, \
         int32_t threads, \
@@ -455,6 +456,12 @@ extern "C" {
             for (uint32_t k=0; k < ret_pairs.size(); k++) { \
                 ret_val[qid * topk + k] = ret_pairs[k].dist; \
                 ret_idx[qid * topk + k] = ret_pairs[k].node_id; \
+                uint32_t temp_node_id = ret_pairs[k].node_id; \
+                float* temp_embeddings = searchers[thread_id].hnsw->graph_l0.get_node_feat(temp_node_id).val; \
+                uint64_t offset_embeddings = static_cast<uint64_t>(qid) * topk * 1024 + k * 1024; \
+                for (uint32_t m=0; m < 1024; m++) { \
+                    ret_embeddings[offset_embeddings + m] = (float)temp_embeddings[m]; \
+                } \
             } \
         } \
     }

@@ -27,7 +27,6 @@ from pecos.utils import smat_util
 from pecos.core import ScipyCsrF32, ScipyDrmF32
 from pecos.core import clib as pecos_clib
 
-
 class HNSW(pecos.BaseClass):
     @dc.dataclass
     class TrainParams(pecos.BaseParams):
@@ -240,11 +239,15 @@ class HNSW(pecos.BaseClass):
 
         indices = np.zeros(pX.rows * pred_params.topk, dtype=np.uint32)
         distances = np.zeros(pX.rows * pred_params.topk, dtype=np.float32)
+
+        normalized_embeddings = np.zeros(pX.rows * pred_params.topk * 1024, dtype=np.float32)
+
         self.fn_dict["predict"](
             self.model_ptr,
             pX,
             indices.ctypes.data_as(POINTER(c_uint32)),
             distances.ctypes.data_as(POINTER(c_float)),
+            normalized_embeddings.ctypes.data_as(POINTER(c_float)),
             pred_params.efS,
             pred_params.topk,
             pred_params.threads,
@@ -254,7 +257,9 @@ class HNSW(pecos.BaseClass):
         if not ret_csr:
             indices = indices.reshape(pX.rows, pred_params.topk)
             distances = distances.reshape(pX.rows, pred_params.topk)
-            return indices, distances
+            normalized_embeddings = normalized_embeddings.reshape(pX.rows, pred_params.topk, 1024)
+            return indices, distances, normalized_embeddings
+            #return indices, distances
         else:
             indptr = np.arange(
                 0, pred_params.topk * (pX.rows + 1), pred_params.topk, dtype=np.uint64

@@ -537,12 +537,12 @@ class corelib(object):
             self.clib_float32.c_xlinear_single_layer_train_csr_f32,
             None,
             [POINTER(ScipyCsrF32)] + arg_list[1:],
-        )
+            )
         corelib.fillprototype(
             self.clib_float32.c_xlinear_single_layer_train_drm_f32,
             None,
             [POINTER(ScipyDrmF32)] + arg_list[1:],
-        )
+            )
 
         arg_list = [c_void_p]
         corelib.fillprototype(self.clib_float32.c_xlinear_destruct_model, None, arg_list)
@@ -683,9 +683,9 @@ class corelib(object):
         corelib.fillprototype(self.clib_float32.c_xlinear_get_layer_type, res_list, arg_list)
 
     def xlinear_load_predict_only(
-        self,
-        folder,
-        weight_matrix_type="BINARY_SEARCH_CHUNKED",
+            self,
+            folder,
+            weight_matrix_type="BINARY_SEARCH_CHUNKED",
     ):
         """
         Load xlinear model in predict only mode.
@@ -713,14 +713,14 @@ class corelib(object):
         self.clib_float32.c_xlinear_destruct_model(c_model)
 
     def xlinear_predict(
-        self,
-        c_model,
-        X,
-        overriden_beam_size,
-        overriden_post_processor_str,
-        overriden_only_topk,
-        threads,
-        pred_alloc,
+            self,
+            c_model,
+            X,
+            overriden_beam_size,
+            overriden_post_processor_str,
+            overriden_only_topk,
+            threads,
+            pred_alloc,
     ):
         """
         Performs a full prediction using the given model and queries.
@@ -769,13 +769,13 @@ class corelib(object):
         )
 
     def xlinear_predict_on_selected_outputs(
-        self,
-        c_model,
-        X,
-        selected_outputs_csr,
-        overriden_post_processor_str,
-        threads,
-        pred_alloc,
+            self,
+            c_model,
+            X,
+            selected_outputs_csr,
+            overriden_post_processor_str,
+            threads,
+            pred_alloc,
     ):
         """
         Performs a select prediction using the given model and queries.
@@ -826,16 +826,16 @@ class corelib(object):
         )
 
     def xlinear_single_layer_predict(
-        self,
-        X,
-        csr_codes,
-        W,
-        C,
-        post_processor_str,
-        only_topk,
-        num_threads,
-        bias,
-        pred_alloc,
+            self,
+            X,
+            csr_codes,
+            W,
+            C,
+            post_processor_str,
+            only_topk,
+            num_threads,
+            bias,
+            pred_alloc,
     ):
         """
         Performs a single layer prediction in C++ using matrices owned by Python.
@@ -899,16 +899,16 @@ class corelib(object):
         )
 
     def xlinear_single_layer_predict_on_selected_outputs(
-        self,
-        X,
-        selected_outputs_csr,
-        csr_codes,
-        W,
-        C,
-        post_processor_str,
-        num_threads,
-        bias,
-        pred_alloc,
+            self,
+            X,
+            selected_outputs_csr,
+            csr_codes,
+            W,
+            C,
+            post_processor_str,
+            num_threads,
+            bias,
+            pred_alloc,
     ):
         """
         Performs a single layer prediction in C++ using matrices owned by Python.
@@ -974,23 +974,23 @@ class corelib(object):
         )
 
     def xlinear_single_layer_train(
-        self,
-        pX,
-        pY,
-        pC,
-        pM,
-        pR,
-        threshold=0.1,
-        max_nonzeros_per_label=None,
-        solver_type="L2R_L2LOSS_SVC_DUAL",
-        Cp=1.0,
-        Cn=1.0,
-        max_iter=1000,
-        eps=0.1,
-        bias=1.0,
-        threads=-1,
-        verbose=0,
-        **kwargs,
+            self,
+            pX,
+            pY,
+            pC,
+            pM,
+            pR,
+            threshold=0.1,
+            max_nonzeros_per_label=None,
+            solver_type="L2R_L2LOSS_SVC_DUAL",
+            Cp=1.0,
+            Cn=1.0,
+            max_iter=1000,
+            eps=0.1,
+            bias=1.0,
+            threads=-1,
+            verbose=0,
+            **kwargs,
     ):
         """
         Performs a single layer training in C++ using matrices owned by Python.
@@ -1094,12 +1094,12 @@ class corelib(object):
             self.clib_float32.c_sparse_matmul_csc_f32,
             None,
             [POINTER(ScipyCscF32), POINTER(ScipyCscF32)] + arg_list[2:],
-        )
+            )
         corelib.fillprototype(
             self.clib_float32.c_sparse_matmul_csr_f32,
             None,
             [POINTER(ScipyCsrF32), POINTER(ScipyCsrF32)] + arg_list[2:],
-        )
+            )
 
         arg_list = [
             POINTER(ScipyCsrF32),  # pX
@@ -1114,12 +1114,12 @@ class corelib(object):
             self.clib_float32.c_sparse_inner_products_csr_f32,
             None,
             [POINTER(ScipyCsrF32)] + arg_list[1:],
-        )
+            )
         corelib.fillprototype(
             self.clib_float32.c_sparse_inner_products_drm_f32,
             None,
             [POINTER(ScipyDrmF32)] + arg_list[1:],
-        )
+            )
 
     def sparse_matmul(self, X, Y, eliminate_zeros=False, sorted_indices=True, threads=-1):
         """
@@ -1265,14 +1265,14 @@ class corelib(object):
         )
 
     def run_clustering(
-        self,
-        py_feat_mat,
-        depth,
-        algo,
-        seed,
-        codes=None,
-        kmeans_max_iter=20,
-        threads=-1,
+            self,
+            py_feat_mat,
+            depth,
+            algo,
+            seed,
+            codes=None,
+            kmeans_max_iter=20,
+            threads=-1,
     ):
         """
         Run clustering with given label embedding matrix and parameters in C++.
@@ -1337,14 +1337,14 @@ class corelib(object):
             self.clib_float32.c_tfidf_predict_from_file,
             None,
             [c_void_p, c_void_p, c_uint64, c_uint64] + arg_list,
-        )
+            )
 
         # model, corpus, doc_lens, nr_docs
         corelib.fillprototype(
             self.clib_float32.c_tfidf_predict,
             None,
             [c_void_p, c_void_p, POINTER(c_uint64), c_uint64] + arg_list,
-        )
+            )
 
         res_list = c_void_p
 
@@ -1604,6 +1604,7 @@ class corelib(object):
                     data_type_map[data_type],
                     POINTER(c_uint32),  # uint32_t* ret_idx
                     POINTER(c_float),  # float* ret_val
+                    POINTER(c_float),
                     c_uint32,  # efS
                     c_uint32,  # topk
                     c_int,  # threads
