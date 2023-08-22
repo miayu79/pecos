@@ -458,8 +458,8 @@ extern "C" {
                 ret_idx[qid * topk + k] = ret_pairs[k].node_id; \
                 uint32_t temp_node_id = ret_pairs[k].node_id; \
                 float* temp_embeddings = searchers[thread_id].hnsw->graph_l0.get_node_feat(temp_node_id).val; \
-                uint64_t offset_embeddings = static_cast<uint64_t>(qid) * topk * 1024 + k * 1024; \
-                for (uint32_t m=0; m < 1024; m++) { \
+                uint64_t offset_embeddings = static_cast<uint64_t>(qid) * topk * 512 + k * 512; \
+                for (uint32_t m=0; m < 512; m++) { \
                     ret_embeddings[offset_embeddings + m] = (float)temp_embeddings[m]; \
                 } \
             } \

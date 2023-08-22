@@ -240,7 +240,7 @@ class HNSW(pecos.BaseClass):
         indices = np.zeros(pX.rows * pred_params.topk, dtype=np.uint32)
         distances = np.zeros(pX.rows * pred_params.topk, dtype=np.float32)
 
-        normalized_embeddings = np.zeros(pX.rows * pred_params.topk * 1024, dtype=np.float32)
+        normalized_embeddings = np.zeros(pX.rows * pred_params.topk * 512, dtype=np.float32)
 
         self.fn_dict["predict"](
             self.model_ptr,
@@ -257,7 +257,7 @@ class HNSW(pecos.BaseClass):
         if not ret_csr:
             indices = indices.reshape(pX.rows, pred_params.topk)
             distances = distances.reshape(pX.rows, pred_params.topk)
-            normalized_embeddings = normalized_embeddings.reshape(pX.rows, pred_params.topk, 1024)
+            normalized_embeddings = normalized_embeddings.reshape(pX.rows, pred_params.topk, 512)
             return indices, distances, normalized_embeddings
             #return indices, distances
         else:
